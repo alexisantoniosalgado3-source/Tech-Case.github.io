@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#185c37">
+<title>TECH-CASE | Centro de consulta</title>
+<style>
+:root{
+ --green:#217346;--green2:#185c37;--green3:#0f5132;--mint:#e8f3ec;
+ --lime:#c6e7d1;--bg:#f3f7f4;--ink:#1f3026;--muted:#65756b;
+ --line:#dce8df;--white:#fff;--gold:#f3c969;--shadow:0 12px 35px #173d2812;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.5}
+button,input{font:inherit}
+.topbar{background:linear-gradient(120deg,#124b2e,#217346 65%,#2f8b57);color:white;padding:28px 18px 56px}
+.wrap{max-width:1050px;margin:auto}
+.navline{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.4px}
+.brandmark{width:39px;height:39px;border-radius:10px;background:#fff;color:var(--green);display:grid;place-items:center;font-size:22px;font-weight:900;box-shadow:0 5px 15px #0002}
+.tag{font-size:12px;border:1px solid #ffffff55;padding:6px 10px;border-radius:99px;color:#e6f4ea}
+.hero{padding-top:34px}
+.hero h1{font-size:clamp(28px,5vw,43px);line-height:1.1;margin:0 0 10px;letter-spacing:-1px}
+.hero p{margin:0;color:#e2f0e6;max-width:590px}
+main{max-width:1050px;margin:-30px auto 0;padding:0 18px 50px;position:relative}
+.searchbox{background:white;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:14px;padding:12px 15px;display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.searchbox span{font-size:19px;color:var(--green)}
+.searchbox input{border:0;outline:0;width:100%;color:var(--ink);background:transparent}
+.section-title{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:22px 2px 13px}
+.section-title h2{font-size:19px;margin:0;color:var(--green2)}
+.section-title small{color:var(--muted)}
+.menu{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.menu-card{background:white;border:1px solid var(--line);border-radius:16px;padding:19px;text-align:left;cursor:pointer;box-shadow:0 4px 15px #173d2808;transition:.2s;min-height:155px;color:var(--ink)}
+.menu-card:hover{transform:translateY(-4px);border-color:#86b99a;box-shadow:var(--shadow)}
+.iconbox{width:43px;height:43px;border-radius:12px;background:var(--mint);display:grid;place-items:center;color:var(--green);font-size:22px;margin-bottom:13px}
+.menu-card strong{display:block;font-size:16px;margin-bottom:4px}
+.menu-card small{color:var(--muted);font-size:13px}
+.menu-card .go{float:right;color:var(--green);font-size:20px}
+.content{display:none;background:white;border:1px solid var(--line);border-radius:17px;padding:clamp(16px,3vw,27px);box-shadow:var(--shadow)}
+.content.active{display:block}
+.back{border:0;background:var(--mint);color:var(--green2);font-weight:700;border-radius:9px;padding:8px 12px;cursor:pointer;margin-bottom:18px}
+.content h2{color:var(--green2);font-size:25px;margin:0 0 5px}
+.intro{color:var(--muted);margin:0 0 20px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.tab{border:1px solid var(--line);background:#fff;color:var(--green2);padding:8px 12px;border-radius:99px;cursor:pointer;font-size:13px}
+.tab.active{background:var(--green);color:white;border-color:var(--green)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.info{border:1px solid var(--line);border-radius:12px;padding:15px;background:#fff}
+.info h3{font-size:15px;margin:0 0 7px;color:var(--green2)}
+.info p{font-size:13px;color:var(--muted);margin:5px 0}
+kbd{display:inline-block;background:#edf4ef;border:1px solid #d6e5da;border-bottom-width:2px;border-radius:5px;padding:2px 6px;font:600 12px Arial;color:#205b39}
+.formula{background:#f4f8f5;border:1px solid #e0ebe3;border-radius:8px;padding:9px;margin-top:8px;font:13px Consolas,monospace;overflow-wrap:anywhere;color:#174b2d}
+.note{background:#fff8e7;border-left:4px solid var(--gold);padding:12px 14px;border-radius:7px;font-size:13px;color:#5f512c;margin:16px 0}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
+th{background:#e8f3ec;color:#185c37;text-align:left}
+th,td{padding:10px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+.calc{background:#f4f8f5;border-radius:12px;padding:16px;margin-top:14px}
+.calc label{font-size:13px;font-weight:700;display:block;margin:8px 0 4px}
+.calc input{width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;background:white}
+.calc button,.primary{background:var(--green);border:0;color:white;padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer;margin-top:12px}
+.result{font-weight:800;color:var(--green2);margin-top:10px}
+footer{text-align:center;color:#849188;font-size:12px;padding:22px}
+.empty{display:none;text-align:center;color:var(--muted);padding:20px}
+@media(max-width:700px){.menu{grid-template-columns:1fr}.menu-card{min-height:unset;display:grid;grid-template-columns:45px 1fr auto;align-items:center;gap:12px;padding:14px}.iconbox{margin:0}.menu-card strong{margin:0}.menu-card small{display:block}.menu-card .go{grid-column:3;grid-row:1}.cards{grid-template-columns:1fr}.tag{display:none}}
+
+.cost-hub{margin:28px 0;padding:clamp(16px,3vw,25px);border:1px solid #cfe2d4;border-radius:18px;background:linear-gradient(180deg,#f0f8f2 0%,#ffffff 210px);box-shadow:0 8px 25px #173d280c}
+.cost-heading{border-left:5px solid var(--green);padding:3px 0 4px 16px;margin-bottom:20px}
+.cost-kicker{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--green);text-transform:uppercase}
+.cost-heading h2{font-size:26px;color:var(--green2);margin:5px 0 8px}
+.cost-heading p{max-width:850px;color:var(--muted);font-size:14px;margin:5px 0}
+.cost-nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.cost-tab{border:1px solid #c9dfd0;background:white;color:var(--green2);border-radius:999px;padding:9px 13px;font-size:12px;font-weight:700;cursor:pointer}
+.cost-tab.active,.cost-tab:hover{background:var(--green);border-color:var(--green);color:white}
+.cost-group-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0}
+.cost-group-title h3{font-size:18px;color:var(--green2);margin:0}
+.cost-group-title p{font-size:13px;color:var(--muted);margin:3px 0}
+.cost-group-title span{white-space:nowrap;background:#e2f0e6;color:#1b633b;border-radius:99px;padding:5px 9px;font-size:11px;font-weight:700}
+.cost-item{border-top:3px solid #b8d9c2}
+.cost-example{background:#f1f7f3;border-radius:7px;padding:8px 10px}
+@media(max-width:600px){.cost-nav{display:grid;grid-template-columns:1fr 1fr}.cost-tab{border-radius:9px;text-align:left}.cost-heading h2{font-size:22px}}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+ <div class="wrap">
+  <div class="navline">
+   <div class="brand"><div class="brandmark">X</div> TECH-CASE</div>
+   <span class="tag">GUÍA DIGITAL · EXCEL Y CONTABILIDAD</span>
+  </div>
+  <div class="hero">
+   <h1>Tu consulta rápida,<br>en un solo lugar.</h1>
+   <p>Atajos, fórmulas, herramientas y fundamentos contables para estudiar y trabajar.</p>
+  </div>
+ </div>
+</header>
+<main>
+ <div class="searchbox"><span>⌕</span><input id="search" type="search" placeholder="Buscar un atajo, fórmula o concepto..." oninput="searchContent()"></div>
+
+ <section id="home">
+  <div class="section-title"><h2>¿Qué deseas consultar?</h2><small>Selecciona una categoría</small></div>
+  <div class="menu">
+   <button class="menu-card" onclick="showSection('shortcuts')"><span class="iconbox">⌨</span><span><strong>A) Atajos en Excel</strong><small>Comandos para trabajar más rápido</small></span><span class="go">›</span></button>
+   <button class="menu-card" onclick="showSection('formulas')"><span class="iconbox">ƒx</span><span><strong>B) Fórmulas y herramientas</strong><small>Funciones útiles para contadores</small></span><span class="go">›</span></button>
+   <button class="menu-card" onclick="showSection('accounting')"><span class="iconbox">▤</span><span><strong>C) Contabilidad y NIF</strong><small>Conceptos y estados financieros</small></span><span class="go">›</span></button>
+  </div>
+  <div class="section-title"><h2>Contenido destacado</h2><small>Ejemplos prácticos</small></div>
+  <div class="cards">
+   <article class="info"><h3>📊 Estado de resultados</h3><p>Identifica ventas, costos, gastos y utilidad neta con un ejemplo sencillo.</p></article>
+   <article class="info"><h3>🧮 Funciones contables</h3><p>Aprende a sumar por cuenta, periodo, proveedor o centro de costos.</p></article>
+  </div>
+ </section>
+
+ <section id="shortcuts" class="content">
+  <button class="back" onclick="goHome()">← Menú principal</button>
+  <h2>A) Atajos en Excel</h2><p class="intro">Combinaciones útiles para capturar, revisar y analizar información.</p>
+  <div class="tabs">
+   <button class="tab active" onclick="filterCards('sc','all',this)">Todos</button>
+   <button class="tab" onclick="filterCards('sc','edicion',this)">Edición</button>
+   <button class="tab" onclick="filterCards('sc','datos',this)">Datos</button>
+   <button class="tab" onclick="filterCards('sc','formato',this)">Formato</button>
+  </div>
+  <div class="cards" id="sc">
+   <article class="info" data-cat="edicion"><h3>Copiar y pegar</h3><p><kbd>Ctrl + C</kbd> copiar · <kbd>Ctrl + V</kbd> pegar</p><p>Duplica datos o fórmulas sin volver a capturarlos.</p></article>
+   <article class="info" data-cat="edicion"><h3>Deshacer / rehacer</h3><p><kbd>Ctrl + Z</kbd> deshacer · <kbd>Ctrl + Y</kbd> rehacer</p><p>Revierte o recupera una acción.</p></article>
+   <article class="info" data-cat="edicion"><h3>Editar celda</h3><p><kbd>F2</kbd></p><p>Permite modificar el contenido de la celda activa.</p></article>
+   <article class="info" data-cat="edicion"><h3>Buscar</h3><p><kbd>Ctrl + B</kbd> o <kbd>Ctrl + F</kbd> según idioma/versión</p><p>Localiza cuentas, folios, RFC o conceptos.</p></article>
+   <article class="info" data-cat="datos"><h3>Crear tabla</h3><p><kbd>Ctrl + T</kbd></p><p>Convierte un rango en tabla con filtros y expansión automática.</p></article>
+   <article class="info" data-cat="datos"><h3>Autosuma</h3><p><kbd>Alt + =</kbd></p><p>Inserta una suma para el rango contiguo.</p></article>
+   <article class="info" data-cat="datos"><h3>Ir al inicio / final</h3><p><kbd>Ctrl + ↑</kbd> · <kbd>Ctrl + ↓</kbd></p><p>Salta al límite del bloque de datos.</p></article>
+   <article class="info" data-cat="formato"><h3>Formato de celdas</h3><p><kbd>Ctrl + 1</kbd></p><p>Configura moneda, fecha, porcentaje, decimales y más.</p></article>
+   <article class="info" data-cat="formato"><h3>Fecha actual</h3><p><kbd>Ctrl + ;</kbd></p><p>Inserta la fecha actual como valor fijo.</p></article>
+   <article class="info" data-cat="formato"><h3>Mostrar fórmulas</h3><p><kbd>Ctrl + `</kbd></p><p>Alterna entre mostrar resultados y fórmulas.</p></article>
+  </div>
+ </section>
+
+ <section id="formulas" class="content">
+  <button class="back" onclick="goHome()">← Menú principal</button>
+  <h2>B) Fórmulas y herramientas</h2><p class="intro">Funciones aplicables a pólizas, auxiliares, facturas, conciliaciones y reportes.</p>
+  <div class="tabs">
+   <button class="tab active" onclick="filterCards('fc','all',this)">Todas</button>
+   <button class="tab" onclick="filterCards('fc','sumas',this)">Sumas y conteos</button>
+   <button class="tab" onclick="filterCards('fc','busqueda',this)">Búsqueda</button>
+   <button class="tab" onclick="filterCards('fc','logica',this)">Lógica y fechas</button>
+  </div>
+  <div class="cards" id="fc">
+   <article class="info" data-cat="sumas"><h3>SUMA</h3><p>Suma importes de un rango.</p><div class="formula">=SUMA(B2:B100)</div><p>Ejemplo: total de cargos o abonos.</p></article>
+   <article class="info" data-cat="sumas"><h3>SUMAR.SI</h3><p>Suma importes que cumplen un criterio.</p><div class="formula">=SUMAR.SI(A:A;"Ventas";B:B)</div><p>Suma importes de la cuenta “Ventas”.</p></article>
+   <article class="info" data-cat="sumas"><h3>SUMAR.SI.CONJUNTO</h3><p>Suma con varios criterios.</p><div class="formula">=SUMAR.SI.CONJUNTO(D:D;A:A;"Enero";B:B;"Gastos")</div><p>Totaliza gastos del mes de enero.</p></article>
+   <article class="info" data-cat="sumas"><h3>CONTAR.SI</h3><p>Cuenta registros que cumplen una condición.</p><div class="formula">=CONTAR.SI(C:C;"Pendiente")</div><p>Cuenta facturas pendientes.</p></article>
+   <article class="info" data-cat="sumas"><h3>SUBTOTALES</h3><p>Calcula sobre datos visibles al filtrar.</p><div class="formula">=SUBTOTALES(9;D2:D100)</div><p>El código 9 suma; útil para reportes filtrables.</p></article>
+   <article class="info" data-cat="busqueda"><h3>BUSCARX</h3><p>Localiza un dato y devuelve información relacionada.</p><div class="formula">=BUSCARX(A2;Catalogo!A:A;Catalogo!B:B;"No encontrado")</div><p>Busca una cuenta y devuelve su descripción.</p></article>
+   <article class="info" data-cat="busqueda"><h3>BUSCARV</h3><p>Busca en la primera columna de una tabla.</p><div class="formula">=BUSCARV(A2;Catalogo!A:C;2;FALSO)</div><p>Alternativa en versiones que no tienen BUSCARX.</p></article>
+   <article class="info" data-cat="logica"><h3>SI</h3><p>Devuelve un resultado según una condición.</p><div class="formula">=SI(C2="Pagada";"Cerrada";"Pendiente")</div><p>Clasifica el estado de una factura.</p></article>
+   <article class="info" data-cat="logica"><h3>SI.ERROR</h3><p>Controla errores en una fórmula.</p><div class="formula">=SI.ERROR(A2/B2;0)</div><p>Evita mostrar #¡DIV/0! cuando el divisor es cero.</p></article>
+   <article class="info" data-cat="logica"><h3>REDONDEAR</h3><p>Redondea a los decimales indicados.</p><div class="formula">=REDONDEAR(B2;2)</div><p>Útil para presentar importes a dos decimales.</p></article>
+   <article class="info" data-cat="logica"><h3>FIN.MES</h3><p>Obtiene el último día de un mes.</p><div class="formula">=FIN.MES(A2;0)</div><p>Apoya cierres y reportes mensuales.</p></article>
+   <article class="info" data-cat="logica"><h3>HOY y DIAS</h3><p>Calcula antigüedad o vencimiento.</p><div class="formula">=DIAS(HOY();A2)</div><p>Días transcurridos desde la fecha de A2.</p></article>
+  </div>
+  <div class="section-title"><h2>Herramientas de Excel para contadores</h2></div>
+  <div class="cards">
+   <article class="info"><h3>Tablas dinámicas</h3><p>Resume movimientos por cuenta, mes, departamento, proveedor o centro de costos. Ideal para balanzas y auxiliares.</p></article>
+   <article class="info"><h3>Formato condicional</h3><p>Resalta vencimientos, diferencias, saldos negativos, duplicados o importes fuera de rango.</p></article>
+   <article class="info"><h3>Validación de datos</h3><p>Crea listas controladas para cuentas, áreas, monedas o estatus y reduce errores de captura.</p></article>
+   <article class="info"><h3>Power Query</h3><p>Importa, limpia y combina archivos mensuales; homologa columnas y actualiza reportes sin repetir pasos manuales.</p></article>
+   <article class="info"><h3>Quitar duplicados</h3><p>Detecta registros repetidos, por ejemplo folios de factura. Verifica antes de eliminar: puede haber folios legítimamente repetidos entre proveedores.</p></article>
+   <article class="info"><h3>Texto en columnas</h3><p>Separa datos concatenados como número de cuenta, RFC o descripción usando delimitadores.</p></article>
+  </div>
+  <div class="note">Nota: las fórmulas están escritas con nombres de funciones en español y separador “;”. La configuración regional de Excel puede requerir nombres o separadores distintos.</div>
+ </section>
+
+ <section id="accounting" class="content">
+  <button class="back" onclick="goHome()">← Menú principal</button>
+  <h2>C) Contabilidad y NIF</h2><p class="intro">Conceptos esenciales y ejemplos didácticos para interpretar información financiera.</p>
+  <div class="section-title"><h2>Conceptos contables</h2></div>
+  <div class="cards">
+   <article class="info"><h3>Activo</h3><p>Recurso controlado por la entidad del que se esperan beneficios económicos futuros.</p><p><b>Ejemplos:</b> bancos, inventarios, clientes y equipo.</p></article>
+   <article class="info"><h3>Pasivo</h3><p>Obligación presente de la entidad cuya liquidación implica desprenderse de recursos.</p><p><b>Ejemplos:</b> proveedores, préstamos e impuestos por pagar.</p></article>
+   <article class="info"><h3>Capital contable</h3><p>Valor residual de los activos después de deducir los pasivos.</p><p><b>Ejemplos:</b> capital aportado y utilidades acumuladas.</p></article>
+   <article class="info"><h3>Ingresos</h3><p>Incrementos en el capital contable derivados de las actividades de la entidad.</p><p><b>Ejemplo:</b> venta de mercancías o prestación de servicios.</p></article>
+   <article class="info"><h3>Costos y gastos</h3><p>Costos asociados a los bienes o servicios vendidos; gastos relacionados con la operación y administración.</p><p><b>Ejemplo:</b> costo de ventas, renta y sueldos administrativos.</p></article>
+   <article class="info"><h3>Devengación contable</h3><p>Los efectos de las transacciones se reconocen cuando ocurren, no necesariamente cuando se cobra o paga el efectivo.</p><p><b>Ejemplo:</b> registrar una venta a crédito al cumplir el criterio de reconocimiento aplicable.</p></article>
+  </div>
+
+
+  <section class="cost-hub">
+   <div class="cost-heading">
+    <span class="cost-kicker">CONTABILIDAD DE COSTOS</span>
+    <h2>Clasificación de los costos</h2>
+    <p>Los costos son los recursos que una empresa utiliza para fabricar productos o prestar servicios. Clasificarlos permite calcular el costo de producción, establecer precios, controlar el uso de recursos, elaborar presupuestos y tomar decisiones informadas.</p>
+    <p>Un mismo costo puede pertenecer a más de una clasificación, dependiendo del enfoque del análisis.</p>
+   </div>
+   <div class="cost-nav" role="tablist" aria-label="Clasificaciones de costos">
+    <button class="cost-tab" type="button" onclick="showCostGroup('comportamiento',this)">1. Por comportamiento</button>
+    <button class="cost-tab" type="button" onclick="showCostGroup('asignacion',this)">2. Por asignación</button>
+    <button class="cost-tab" type="button" onclick="showCostGroup('funcion',this)">3. Por función en la empresa</button>
+    <button class="cost-tab" type="button" onclick="showCostGroup('decision',this)">4. Para la toma de decisiones</button>
+    <button class="cost-tab" type="button" onclick="showCostGroup('planeacion',this)">5. Por control y planeación</button>
+   </div>
+   <div class="cost-group" id="cost-comportamiento" style="display:block">
+    <div class="cost-group-title"><div><h3>1. Por comportamiento</h3><p>Cómo cambia el costo según el nivel de actividad</p></div><span>3 conceptos</span></div>
+    <div class="cards">
+     <article class="info cost-item"><h3>1. Costos fijos</h3><p>No cambian en total dentro de un rango relevante de producción.</p><p class="cost-example"><b>Ejemplo práctico:</b> Renta de instalaciones y sueldos administrativos.</p></article>
+     <article class="info cost-item"><h3>2. Costos variables</h3><p>Cambian directamente con el volumen de producción o actividad.</p><p class="cost-example"><b>Ejemplo práctico:</b> Materia prima y materiales de empaque por unidad.</p></article>
+     <article class="info cost-item"><h3>3. Costos mixtos o semivariables</h3><p>Tienen una parte fija y otra variable.</p><p class="cost-example"><b>Ejemplo práctico:</b> Electricidad: cargo fijo más consumo.</p></article>
+    </div>
+   </div>
+   <div class="cost-group" id="cost-asignacion" style="display:none">
+    <div class="cost-group-title"><div><h3>2. Por asignación</h3><p>Relación del costo con el producto o servicio</p></div><span>2 conceptos</span></div>
+    <div class="cards">
+     <article class="info cost-item"><h3>4. Costos directos</h3><p>Se identifican y asignan fácilmente a un producto, servicio u orden.</p><p class="cost-example"><b>Ejemplo práctico:</b> Madera utilizada para fabricar una mesa.</p></article>
+     <article class="info cost-item"><h3>5. Costos indirectos</h3><p>No se identifican directamente con una unidad específica; requieren un criterio de distribución.</p><p class="cost-example"><b>Ejemplo práctico:</b> Sueldo del supervisor de planta.</p></article>
+    </div>
+   </div>
+   <div class="cost-group" id="cost-funcion" style="display:none">
+    <div class="cost-group-title"><div><h3>3. Por función en la empresa</h3><p>Área o actividad que origina el costo</p></div><span>9 conceptos</span></div>
+    <div class="cards">
+     <article class="info cost-item"><h3>6. Costos de producción o fabricación</h3><p>Recursos necesarios para transformar materiales en productos terminados.</p><p class="cost-example"><b>Ejemplo práctico:</b> Materiales, mano de obra y costos indirectos de fabricación.</p></article>
+     <article class="info cost-item"><h3>7. Costos de materia prima</h3><p>Materiales que se incorporan al producto; pueden ser directos o indirectos.</p><p class="cost-example"><b>Ejemplo práctico:</b> Harina para elaborar pan.</p></article>
+     <article class="info cost-item"><h3>8. Costos de mano de obra directa</h3><p>Remuneraciones del personal que participa directamente en la fabricación.</p><p class="cost-example"><b>Ejemplo práctico:</b> Sueldo del operador que ensambla el producto.</p></article>
+     <article class="info cost-item"><h3>9. Costos indirectos de fabricación (CIF)</h3><p>Costos de fábrica distintos de la materia prima directa y la mano de obra directa, necesarios para producir.</p><p class="cost-example"><b>Ejemplo práctico:</b> Mantenimiento de máquinas, energía de planta y depreciación de equipos.</p></article>
+     <article class="info cost-item"><h3>10. Costos de administración</h3><p>Recursos destinados a la gestión y administración general.</p><p class="cost-example"><b>Ejemplo práctico:</b> Contabilidad, recursos humanos y papelería administrativa.</p></article>
+     <article class="info cost-item"><h3>11. Costos de ventas y marketing</h3><p>Recursos para promover y comercializar productos o servicios.</p><p class="cost-example"><b>Ejemplo práctico:</b> Publicidad, campañas y comisiones de venta.</p></article>
+     <article class="info cost-item"><h3>12. Costos de distribución y logística</h3><p>Recursos para almacenar, transportar y entregar los productos.</p><p class="cost-example"><b>Ejemplo práctico:</b> Fletes, almacén y distribución.</p></article>
+     <article class="info cost-item"><h3>13. Costos financieros</h3><p>Costos relacionados con el financiamiento y uso de recursos ajenos.</p><p class="cost-example"><b>Ejemplo práctico:</b> Intereses de préstamos y comisiones bancarias.</p></article>
+     <article class="info cost-item"><h3>14. Costos de investigación y desarrollo (I+D)</h3><p>Recursos destinados a investigar, diseñar o desarrollar productos y procesos.</p><p class="cost-example"><b>Ejemplo práctico:</b> Pruebas de formulación y desarrollo de prototipos.</p></article>
+    </div>
+   </div>
+   <div class="cost-group" id="cost-decision" style="display:none">
+    <div class="cost-group-title"><div><h3>4. Para la toma de decisiones</h3><p>Cómo evaluar alternativas y elegir la mejor opción</p></div><span>7 conceptos</span></div>
+    <div class="cards">
+     <article class="info cost-item"><h3>15. Costo de oportunidad</h3><p>Beneficio al que se renuncia por elegir una alternativa en lugar de otra.</p><p class="cost-example"><b>Ejemplo práctico:</b> Usar una máquina para fabricar A implica renunciar al margen que habría generado fabricar B.</p></article>
+     <article class="info cost-item"><h3>16. Costos hundidos</h3><p>Costos ya incurridos que no pueden recuperarse; no deberían determinar una decisión futura.</p><p class="cost-example"><b>Ejemplo práctico:</b> Estudio de mercado ya pagado.</p></article>
+     <article class="info cost-item"><h3>17. Costo marginal</h3><p>Costo adicional de producir una unidad más.</p><p class="cost-example"><b>Ejemplo práctico:</b> Aumento del costo total al fabricar una unidad adicional.</p></article>
+     <article class="info cost-item"><h3>18. Costo total</h3><p>Suma de los costos fijos y variables para un nivel de actividad.</p><p class="cost-example"><b>Ejemplo práctico:</b> Costos fijos + costos variables.</p></article>
+     <article class="info cost-item"><h3>19. Costo promedio o unitario</h3><p>Costo total dividido entre el número de unidades producidas.</p><p class="cost-example"><b>Ejemplo práctico:</b> Costo total ÷ unidades producidas.</p></article>
+     <article class="info cost-item"><h3>20. Costos relevantes</h3><p>Costos futuros que cambian entre las alternativas y afectan la decisión.</p><p class="cost-example"><b>Ejemplo práctico:</b> Materia prima adicional para aceptar un pedido especial.</p></article>
+     <article class="info cost-item"><h3>21. Costos irrelevantes</h3><p>No cambian entre las alternativas evaluadas y no afectan esa decisión específica.</p><p class="cost-example"><b>Ejemplo práctico:</b> Una renta fija que será igual con cualquiera de las opciones.</p></article>
+    </div>
+   </div>
+   <div class="cost-group" id="cost-planeacion" style="display:none">
+    <div class="cost-group-title"><div><h3>5. Por control y planeación</h3><p>Presupuesto, seguimiento y responsabilidad</p></div><span>4 conceptos</span></div>
+    <div class="cards">
+     <article class="info cost-item"><h3>22. Costos estándar</h3><p>Costos predeterminados que sirven como referencia de lo que debería costar producir bajo condiciones establecidas.</p><p class="cost-example"><b>Ejemplo práctico:</b> Consumo estándar de 2 kg de material por unidad.</p></article>
+     <article class="info cost-item"><h3>23. Costos históricos o reales</h3><p>Costos efectivamente incurridos durante la producción u operación.</p><p class="cost-example"><b>Ejemplo práctico:</b> Importe real de materia prima consumida en el periodo.</p></article>
+     <article class="info cost-item"><h3>24. Costos controlables</h3><p>Costos sobre los que un responsable puede influir dentro de un periodo determinado.</p><p class="cost-example"><b>Ejemplo práctico:</b> Consumo de papelería de un departamento.</p></article>
+     <article class="info cost-item"><h3>25. Costos no controlables</h3><p>Costos sobre los que el responsable no tiene capacidad de decisión directa en el periodo evaluado.</p><p class="cost-example"><b>Ejemplo práctico:</b> Incremento de renta establecido por contrato.</p></article>
+    </div>
+   </div>
+
+   <div class="note">Recuerda: los costos fijos y variables se clasifican por comportamiento; los directos e indirectos, por asignación. Las categorías funcionales identifican para qué área se utiliza el recurso. Las clasificaciones para decisiones y planeación ayudan a evaluar alternativas y controlar resultados.</div>
+  </section>
+
+  <div class="section-title"><h2>NIF: ideas fundamentales</h2></div>
+  <div class="cards">
+   <article class="info"><h3>¿Qué son las NIF?</h3><p>Las Normas de Información Financiera mexicanas establecen bases para reconocer, valuar, presentar y revelar operaciones en los estados financieros.</p></article>
+   <article class="info"><h3>Postulados básicos</h3><p>Incluyen sustancia económica, entidad económica, negocio en marcha, devengación contable, asociación de costos y gastos con ingresos, valuación, dualidad económica y consistencia.</p></article>
+   <article class="info"><h3>Presentación y revelación</h3><p>La información debe presentarse de forma útil y suficiente, con notas que expliquen políticas, estimaciones y datos relevantes.</p></article>
+   <article class="info"><h3>Importante</h3><p>La aplicación concreta depende de la operación, la NIF particular vigente y las circunstancias de la entidad. Este resumen no sustituye la consulta del texto oficial.</p></article>
+  </div>
+  <div class="section-title"><h2>Ejemplo: estado de resultados</h2></div>
+  <p class="intro">Empresa ficticia · cifras ilustrativas en pesos mexicanos.</p>
+  <div class="tablewrap"><table>
+   <thead><tr><th>Concepto</th><th>Importe</th></tr></thead>
+   <tbody>
+    <tr><td>Ventas netas</td><td>$250,000</td></tr>
+    <tr><td>(−) Costo de ventas</td><td>$140,000</td></tr>
+    <tr><td><b>Utilidad bruta</b></td><td><b>$110,000</b></td></tr>
+    <tr><td>(−) Gastos de operación</td><td>$65,000</td></tr>
+    <tr><td><b>Utilidad de operación</b></td><td><b>$45,000</b></td></tr>
+    <tr><td>(−) Resultado integral de financiamiento, neto</td><td>$5,000</td></tr>
+    <tr><td><b>Utilidad antes de impuestos</b></td><td><b>$40,000</b></td></tr>
+    <tr><td>(−) Impuestos a la utilidad (supuesto)</td><td>$12,000</td></tr>
+    <tr><td><b>Utilidad neta</b></td><td><b>$28,000</b></td></tr>
+   </tbody>
+  </table></div>
+  <div class="note">Es un esquema simplificado para aprendizaje. La presentación real debe atender la NIF B-3 vigente y las características de la entidad; no representa una declaración fiscal.</div>
+  <div class="section-title"><h2>Ejemplo: balance general</h2></div>
+  <p class="intro">Cifras ilustrativas. La ecuación contable debe cuadrar: Activo = Pasivo + Capital.</p>
+  <div class="tablewrap"><table>
+   <thead><tr><th>Activo</th><th>Importe</th><th>Pasivo y capital</th><th>Importe</th></tr></thead>
+   <tbody>
+    <tr><td>Bancos</td><td>$35,000</td><td>Proveedores</td><td>$20,000</td></tr>
+    <tr><td>Clientes</td><td>$25,000</td><td>Préstamo</td><td>$30,000</td></tr>
+    <tr><td>Inventarios</td><td>$40,000</td><td>Capital contable</td><td>$70,000</td></tr>
+    <tr><td>Equipo</td><td>$20,000</td><td></td><td></td></tr>
+    <tr><td><b>Total activo</b></td><td><b>$120,000</b></td><td><b>Total pasivo + capital</b></td><td><b>$120,000</b></td></tr>
+   </tbody>
+  </table></div>
+  <div class="section-title"><h2>Calculadora rápida: estado de resultados</h2></div>
+  <div class="calc">
+   <label for="ventas">Ventas netas ($)</label><input id="ventas" type="number" value="250000">
+   <label for="costo">Costo de ventas ($)</label><input id="costo" type="number" value="140000">
+   <label for="gastos">Gastos de operación ($)</label><input id="gastos" type="number" value="65000">
+   <label for="fin">Gastos financieros netos ($)</label><input id="fin" type="number" value="5000">
+   <label for="impuesto">Impuestos a la utilidad ($)</label><input id="impuesto" type="number" value="12000">
+   <button onclick="calculate()">Calcular resultado</button>
+   <div id="calcresult" class="result">Utilidad neta: $28,000.00</div>
+  </div>
+ </section>
+ <div id="empty" class="empty">No se encontraron coincidencias. Prueba con otra palabra.</div>
+</main>
+<footer>TECH-CASE · Material educativo de consulta rápida</footer>
+<script>
+
+function showCostGroup(key,btn){
+ document.querySelectorAll('.cost-group').forEach(group=>group.style.display='none');
+ const target=document.getElementById('cost-'+key);
+ if(target) target.style.display='block';
+ document.querySelectorAll('.cost-tab').forEach(tab=>tab.classList.remove('active'));
+ btn.classList.add('active');
+}
+
+function showSection(id){
+ document.getElementById('home').style.display='none';
+ document.querySelectorAll('.content').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.getElementById('search').value='';
+ document.getElementById('empty').style.display='none';
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function goHome(){
+ document.querySelectorAll('.content').forEach(x=>x.classList.remove('active'));
+ document.getElementById('home').style.display='block';
+ document.getElementById('search').value='';
+ document.getElementById('empty').style.display='none';
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function filterCards(id,cat,btn){
+ const root=document.getElementById(id);
+ root.querySelectorAll('.info').forEach(card=>card.style.display=(cat==='all'||card.dataset.cat===cat)?'block':'none');
+ btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ btn.classList.add('active');
+}
+function searchContent(){
+ const q=document.getElementById('search').value.toLocaleLowerCase('es');
+ const active=document.querySelector('.content.active');
+ const home=document.getElementById('home');
+ let found=0;
+ if(active){
+  active.querySelectorAll('.info').forEach(card=>{
+   const match=card.innerText.toLocaleLowerCase('es').includes(q);
+   card.style.display=match?'block':'none'; if(match)found++;
+  });
+ }else{
+  home.querySelectorAll('.info').forEach(card=>{
+   const match=card.innerText.toLocaleLowerCase('es').includes(q);
+   card.style.display=match?'block':'none'; if(match)found++;
+  });
+ }
+ document.getElementById('empty').style.display=(q && found===0)?'block':'none';
+}
+function calculate(){
+ const n=id=>Number(document.getElementById(id).value)||0;
+ const net=n('ventas')-n('costo')-n('gastos')-n('fin')-n('impuesto');
+ document.getElementById('calcresult').textContent='Utilidad neta: '+net.toLocaleString('es-MX',{style:'currency',currency:'MXN'});
+}
+</script>
+</body>
+</html>
